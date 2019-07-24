@@ -7,12 +7,12 @@ const createCategory = (name, test) =>{
         .catch(err => reject(err))
     })
 }
-const findOneCategory = (name) =>{
+const findAllCategory = (name) =>{
     return new Promise( (resolve, reject) =>{
-        UserModel.findOne(name)
+        UserModel.find(name)
         .then(data => resolve(data))
         .catch(err => reject(err))
     })
 }
 
-module.exports ={createCategory, findOneCategory}
+module.exports ={createCategory, findAllCategory}

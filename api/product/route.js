@@ -15,14 +15,14 @@ const storage = multer.diskStorage({
 const upload = multer({storage:storage})
 
 
-router.post('/:catId', upload.single('prd_image'), (req, res) =>{
+router.post('/', upload.single('prd_image'), (req, res) =>{
 
   var img_path = req.file.path;
   var img_array = img_path.split('\\')
   img_array.splice(0, 1)
   img_name =  img_array.join('/')
  
-  productController.createProduct(req.params.catId, req.body, img_name)
+  productController.createProduct( req.body, img_name)
   .then(data => res.send({sucess:1, data}))
   .catch(err => console.log(err))
 })

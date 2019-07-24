@@ -1,14 +1,14 @@
 const productModel  = require("./model");
 const categoryModel  = require('../category/model');
 
-const createProduct = (catId, { prd_name,
+const createProduct = ( {catId, prd_name,
                        prd_price, prd_warranty, 
                       prd_asccessories, prd_new, 
                       prd_promotion, prd_details, active}, img_name) =>{
     return new Promise( (resolve, reject) =>{
         categoryModel.findById(catId)
         .then(cat =>{
-            if(!cat) console.log('error')
+            if(!cat) console.log('123')
               else{
                 const product = new productModel({
                     category: catId,
@@ -35,12 +35,12 @@ const getAllProduct = () =>{
     })
 }
 
-const getProductByPage = (pageNumber) =>{
+const getProductByPage = (page, perPage) =>{
   return new Promise( (resolve, reject) =>{
     productModel.find({active:true})
     .populate('category')
-    .skip((pageNumber - 1) *6)
-    .limit(6)
+    .skip((page - 1) *perPage)
+    .limit(perPage)
     .exec()
     .then(products => resolve(products))
     .catch(err => reject(err)) 
@@ -66,7 +66,7 @@ const updateProduct = (prdId, { prd_name, prd_image,
 const deleteProduct = (prdId) =>{
   return new Promise( (resolve, reject) =>{
     productModel.findByIdAndUpdate(prdId, {active: false})
-    .then(imageDeleted => resolve(imageDeleted._id))
+    .then(prdDelete => resolve(prdDelete._id))
     .catch(err => reject(err))
   })
 }

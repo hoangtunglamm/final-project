@@ -8,7 +8,7 @@ router.post('/', (req, res) =>{
 })
 
 router.get('/find', (req, res) =>{
-    categoryController.findOneCategory(req.body)
+    categoryController.findAllCategory(req.body)
     .then(data => res.send(data))
     .catch(err => console.log(err))
 })
