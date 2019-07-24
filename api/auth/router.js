@@ -2,14 +2,23 @@ const express = require('express');
 const router = express.Router();
 const authController = require('./controller');
 
+router.get('/', (req, res) =>{
+    res.render('login', {data: {}})
+})
+
 router.post('/', (req, res) =>{
-    console.log(req.body)
     authController.login(req.body)
     .then(userInfo =>{
-        req.session.user = userInfo;
-        res.send({success: 1, user: userInfo})
+        if(userInfo>0){
+            req.session.user = userInfo;
+            res.redirect('/user/dashboard')
+        }
+        else{
+            res.redirect('/auth')
+        }
     })
-    .catch(err => res.status(err.statusCode).send({success: 0, err: err.err}))
+    .catch((err) => {
+        res.render('login', {err})})
 })
 
 module.exports = router

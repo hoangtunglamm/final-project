@@ -17,11 +17,11 @@ const storage = multer.diskStorage({
 const upload = multer({storage:storage})
 
 
-// router.post('/', (req, res) =>{
-//     userController.createUser(req.body)
-//     .then(data => res.send(data))
-//     .catch(err => console.log(err))
-// });
+router.post('/', (req, res) =>{
+    userController.createUser(req.body)
+    .then(data => res.send(data))
+    .catch(err => console.log(err))
+});
 
 // router.get('/', (req, res) =>{
 //     userController.findAllUser()
