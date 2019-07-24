@@ -21,29 +21,21 @@ router.post('/', upload.single('prd_image'), (req, res) =>{
   var img_array = img_path.split('\\')
   img_array.splice(0, 1)
   img_name =  img_array.join('/')
- 
+  console.log(img_path)
   productController.createProduct( req.body, img_name)
   .then(data => res.send({sucess:1, data}))
   .catch(err => console.log(err))
 })
 
-// router.post('/', (req, res) =>{
 
-//   productController.createProduct(req.body)
-//   .then(data => res.send({sucess:1, data}))
-//   .catch(err => console.log(err))
-// })
-
-// router.get('/', (req, res) =>{
-//  productController.getAllProduct()
-//  .then(data => res.send({sucess: 1, data}))
-//  .catch(err => console.log(err))
- 
-// })
-
-router.post('/update/:prdId', (req, res) =>{
-  console.log(req.body)
-  productController.updateProduct(req.params.prdId, req.body)
+router.post('/update/:prdId', upload.single('prd_image'), (req, res) =>{
+  
+  var img_path = req.file.path;
+  var img_array = img_path.split('\\')
+  img_array.splice(0, 1)
+  img_name =  img_array.join('/')
+  console.log(img_name)
+  productController.updateProduct(req.params.prdId, req.body, img_name)
   .then(data => res.send(data))
   .catch(err => console.log(err))
 })

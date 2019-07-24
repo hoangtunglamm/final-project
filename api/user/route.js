@@ -3,6 +3,7 @@ router = express.Router();
 const userController = require('./controller');
 const categoryController = require('../category/controller')
 const productController = require('../product/controller')
+const productModel = require('../product/model')
 const multer = require('multer');
 
 const storage = multer.diskStorage({
@@ -38,26 +39,31 @@ router.get('/dashboard', (req, res) =>{
     res.render('dashboard')
 })
 
-// router.get('/product', (req, res) =>{
-//     var page = req.query.page;
-   
-//     productController.getProductByPage(page|| 1)
-//     .then((data )=>{ 
-//         res.render('product', {data})})
-//     .catch(err => console.log(err))
-// })
 
-router.get('/product/:page', (req, res)=>{
-    var page = req.params.page
-    var perPage = 6
-    productController.getProductByPage(page, perPage)
-    .then( (data) => {  
-        console.log(perPage)      
-        res.render('product', {data: data, 
-                               current: page
-         })
+router.get('/product', (req, res)=>{
+    productController.getAllProduct()
+    .then( (rs) =>{
+        pageLength = rs.length
+        page = parseInt(req.query.page) || 1
+        perPage = 6
+        var number_page = Math.ceil(pageLength/perPage);	
+		var page_prev, page_next;
+		page_prev = page - 1;
+		if(page_prev == 0){
+				page_prev = 1;
+		}
+		page_next = page + 1;
+		if(page_next > number_page){
+				page_next = number_page;
+		}
+        productController.getProductByPage(page, perPage)
+        .then( (data) =>{
+            console.log(data)
+            res.render('product', {data, number_page, page_next, page_prev})                        
+        })
+        .catch(err => console.log(err))
     })
-    .catch(err => console.log(err))
+  
 })
 router.get('/product/add', (req, res) =>{      
     categoryController.findAllCategory()
@@ -68,25 +74,31 @@ router.get('/product/add', (req, res) =>{
 })
 router.post('/product/add', upload.single('prd_image'), (req, res) =>{
     var img_path = req.file.path;
+    console.log(img_path)
     var img_array = img_path.split('\\')
     img_array.splice(0, 1)
     img_name =  img_array.join('/')
     
     productController.createProduct( req.body, img_name)
-    // .then(data => res.send(data))
-    // .catch(err => console.log(err))
-    // .then((data) => {
-    //     res.redirect('/user/product',{data})
-    // })
-    // .catch(err => console.log(err))
+
     res.redirect('/user/product')
 });
 
-router.get('/product/edit/:prd_id', (req, res) =>{
-    res.render('add_product')
+router.get('/product/edit/:prdId', (req, res) =>{
+    categoryController.findAllCategory()
+    .then((categories) =>{
+        res.render('edit_product', {categories})
+    })
+    .catch(err => console.log(err))
 })
-router.post('/product/edit/:prd_id', (req, res) =>{
-    res.render('add_product')
+router.post('/product/edit/:prdId', upload.single('prd_image'), (req, res) =>{
+    var img_path = req.file.path;
+    console.log(img_path)
+    var img_array = img_path.split('\\')
+    img_array.splice(0, 1)
+    img_name =  img_array.join('/')
+    productController.updateProduct(req.params.prdId, req.body, img_name)
+    res.redirect('/user/product')
 })
 
 router.get('/product/del/:prdId', (req, res) =>{

@@ -28,8 +28,6 @@ const createProduct = ( {catId, prd_name,
 const getAllProduct = () =>{
     return new Promise( (resolve, reject) =>{
         productModel.find({active:true})
-        .populate('category')
-        .exec()
         .then(data => resolve(data))
         .catch(err => reject(err))
     })
@@ -47,20 +45,19 @@ const getProductByPage = (page, perPage) =>{
   })
 }
 
-const updateProduct = (prdId, { prd_name, prd_image,
-  prd_price, prd_warranty,
+const updateProduct = (prdId, { prd_name,
+  prd_price, prd_warranty, 
   prd_asccessories, prd_new,
-  prd_promotion, prd_details, active}) =>{
+  prd_promotion, prd_details, active}, img_name) =>{
   return new Promise( (resolve, reject) =>{
-    productModel.findByIdAndUpdate(
-        prdId, { prd_name, prd_image,
-        prd_price, prd_warranty,
-        prd_asccessories, prd_new,
-        prd_promotion, prd_details, active}
-    )
-    .then(prdUpdated => resolve(prdUpdated))
+    productModel.findByIdAndUpdate(prdId, { prd_name, prd_price, prd_warranty,        
+      prd_asccessories, prd_new,  prd_image: img_name, 
+      prd_promotion, prd_details, active: true, prd_image: img_name }
+       )
+      .then(prdUpdated => resolve(prdUpdated))
     .catch(err => reject(err))
   })
+
 }
 
 const deleteProduct = (prdId) =>{
