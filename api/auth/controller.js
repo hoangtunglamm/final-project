@@ -36,6 +36,11 @@ const login = ({username, password}) =>{
      })
 }
 
-const logout = (req, res) => req.session.destroy();
+// const logout = (req, res) => {
+//     if(!req.session){
+//         console.log('1234')
+//     }
 
-module.exports = {login, logout}
+// };
+
+module.exports = {login}

@@ -52,5 +52,10 @@ router.get('/', (req, res) =>{
   .catch(err => console.log(err))
 })
 
+router.get('/fe', (req, res) =>{
+  productController.findProductFeatured()
+  .then(data => res.send(data))
+  .catch(err => console.log(err))
+})
 
 module.exports = router  

@@ -12,6 +12,12 @@ const productModel = new Schema(
     prd_details:{type: String},
     active: {type: Boolean, default: true},
     category: { type: Schema.Types.ObjectId, ref:"category" },
+    prd_accessories: {type: String, default: ''},
+    prd_featured: {type: Number, default:2},
+    prd_status: {type: Number, default: 1}
+  },
+  {
+    timestamps: true
   }
 );
 

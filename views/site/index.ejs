@@ -1,0 +1,51 @@
+<% include layout/header%>              
+                <!--	Feature Product	-->
+                <div class="products">
+                    <h3>Sản phẩm nổi bật</h3>
+                    <%for(key in prdFeatured){%>               
+                        <%if(start ==1){%>
+                            <div class="product-list card-deck">     
+                        <%}%>    
+                        <div class="product-item card text-center">
+                            <a href="#"><img src="/static/<%=prdFeatured[key].prd_image%>"></a>
+                            <h4><a href="#"><%=prdFeatured[key].prd_name%></a></h4>
+                            <p>Giá Bán: <span><%=prdFeatured[key].prd_price%></span></p>
+                        </div>
+                        <%if(start ==3){%>
+                    </div>
+                    <%start=0}start++%>
+                    <%}%>
+                </div>
+                <div class="panel-footer">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination">
+							<li class="page-item"><a class="page-link" href="/user/product/>">&laquo;</a></li>
+						
+							<li class="page-item"><a class="page-link" href="/user/product>"></a></li>
+						
+							<li class="page-item"><a class="page-link" href="/user/product>">&raquo;</a></li>
+						</ul>
+					</nav>
+				</div>
+                <!--	End Feature Product	-->
+                <br>
+                
+                <!--	Latest Product	-->
+                <div class="products">
+                    <h3>Sản phẩm mới</h3>
+                    <%for(key in prdLastest){%>               
+                        <%if(start ==1){%>
+                            <div class="product-list card-deck">     
+                        <%}%>    
+                        <div class="product-item card text-center">
+                            <a href="#"><img src="/static/<%=prdLastest[key].prd_image%>"></a>
+                            <h4><a href="#"><%=prdLastest[key].prd_name%></a></h4>
+                            <p>Giá Bán: <span><%=prdLastest[key].prd_price%></span></p>
+                        </div>
+                        <%if(start ==3){%>
+                    </div>
+                    <%start=0}start++%>
+                    <%}%>
+                </div>
+                <!--	End Latest Product	-->
+<% include layout/footer%>       

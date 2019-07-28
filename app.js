@@ -8,6 +8,8 @@ const categoryRouter = require('./api/category/route')
 const productRouter = require('./api/product/route')
 const authRouter = require('./api/auth/router')
 const userRouter = require('./api/user/route')
+const siteRouter = require('./api/site/route')
+const authMiddleware = require('./api/middlewares/auth')
 
 let app = express();
 const port = 8000;
@@ -41,16 +43,13 @@ mongoose.connect('mongodb://localhost:27017/final-project', {useNewUrlParser: tr
     else console.log("Database connect successful");
   });
 
-
+app.use('/', siteRouter)
 app.use('/category', categoryRouter)
 app.use('/product', productRouter)
 app.use('/auth', authRouter)
-app.use('/user', userRouter)
+app.use('/user', authMiddleware.authorize, userRouter)
 
-app.get('/', (req, res) =>{
-    console.log(req.sessionID)
-    res.send('ok')
-})
+
 
 app.listen(port, (err) =>{
     if(err) console.log(err)

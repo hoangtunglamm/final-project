@@ -23,20 +23,8 @@ router.post('/', (req, res) =>{
     .catch(err => console.log(err))
 });
 
-// router.get('/', (req, res) =>{
-//     userController.findAllUser()
-//     .then(data => res.send(data))
-//     .catch(err => console.log(err))
-// })
-
-// router.get('/find', (req, res ) =>{
-//     userController.findOneUser(req.body)
-//     .then(data => res.send(data))
-//     .catch(err => console.log(err))
-// })
-
 router.get('/dashboard', (req, res) =>{
-    res.render('dashboard')
+    res.render('user/dashboard')
 })
 
 
@@ -58,8 +46,7 @@ router.get('/product', (req, res)=>{
 		}
         productController.getProductByPage(page, perPage)
         .then( (data) =>{
-            console.log(data)
-            res.render('product', {data, number_page, page_next, page_prev})                        
+            res.render('user/product', {data, number_page, page_next, page_prev})                        
         })
         .catch(err => console.log(err))
     })
@@ -68,7 +55,7 @@ router.get('/product', (req, res)=>{
 router.get('/product/add', (req, res) =>{      
     categoryController.findAllCategory()
     .then((categories) =>{
-        res.render('add_product', {categories})
+        res.render('user/add_product', {categories})
     })
     .catch(err => console.log(err))
 })
@@ -85,10 +72,15 @@ router.post('/product/add', upload.single('prd_image'), (req, res) =>{
 });
 
 router.get('/product/edit/:prdId', (req, res) =>{
-    categoryController.findAllCategory()
-    .then((categories) =>{
-        res.render('edit_product', {categories})
+    productController.findOneProduct(req.params.prdId)
+    .then(prdFound =>{
+        console.log(prdFound)
+        categoryController.findAllCategory()
+        .then((categories) =>{
+            res.render('user/edit_product', {categories, prdFound})
+        })
     })
+   
     .catch(err => console.log(err))
 })
 router.post('/product/edit/:prdId', upload.single('prd_image'), (req, res) =>{
@@ -105,9 +97,5 @@ router.get('/product/del/:prdId', (req, res) =>{
     productController.deleteProduct(req.params.prdId)
     res.redirect('/user/product')
 })
-
-
-
-
 
 module.exports = router

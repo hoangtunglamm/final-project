@@ -19,31 +19,32 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<div class="col-md-6">
+						
 							<form role="form" method="post" enctype="multipart/form-data">
 							<div class="form-group">
 								<label>Tên sản phẩm</label>
-								<input required name="prd_name" class="form-control" placeholder="">
+								<input required name="prd_name" class="form-control" placeholder="" value="<%=prdFound.prd_name%>">
 							</div>
 															
 							<div class="form-group">
 								<label>Giá sản phẩm</label>
-								<input required name="prd_price" type="number" min="0" class="form-control">
+								<input required name="prd_price" type="number" min="0" class="form-control" value="<%=prdFound.prd_price%>">
 							</div>
 							<div class="form-group">
 								<label>Bảo hành</label>
-								<input required name="prd_warranty" type="text" class="form-control">
+								<input required name="prd_warranty" type="text" class="form-control" value="<%=prdFound.prd_warranty%>">
 							</div>    
 							<div class="form-group">
 								<label>Phụ kiện</label>
-								<input required name="prd_accessories" type="text" class="form-control">
+								<input required name="prd_accessories" type="text" class="form-control" value="<%=prdFound.prd_accessories%>">
 							</div>                  
 							<div class="form-group">
 								<label>Khuyến mãi</label>
-								<input required name="prd_promotion" type="text" class="form-control">
+								<input required name="prd_promotion" type="text" class="form-control" value="<%=prdFound.prd_promotion%>">
 							</div>  
 							<div class="form-group">
 								<label>Tình trạng</label>
-								<input required name="prd_new" type="text" class="form-control">
+								<input required name="prd_new" type="text" class="form-control" value="<%=prdFound.prd_new%>">
 							</div>  
 							
 						</div>
@@ -51,7 +52,7 @@
 							<div class="form-group">
 								<label>Ảnh sản phẩm</label>
 								
-								<input required name="prd_image" type="file">
+								<input required name="prd_image" type="file" value="<%=prdFound.prd_image%>">
 						
 							</div>
 							<div class="form-group">
@@ -62,12 +63,27 @@
 									<%}%>
 								</select>
 							</div>
-							
-					
-					
 							<div class="form-group">
+								<label>Trạng thái</label>
+								<select name="prd_status" class="form-control">
+									<option value=1 <%if(prdFound.prd_status==1){%>selected<%}%>>Còn hàng</option>
+									<option value=0 <%if(prdFound.prd_status==2){%>selected<%}%>>Hết hàng</option>
+								</select>
+							</div>
+							
+							<div class="form-group">
+								<label>Sản phẩm nổi bật</label>
+								<div class="checkbox">
+									<label>
+										<input <%if(prdFound.prd_featured==1){%>checked<%}%> name="prd_featured" type="checkbox" value=1>Nổi bật
+									</label>
+								</div>
+							</div>	
+					
+					
+							<div class="form-group" >
 									<label>Mô tả sản phẩm</label>
-									<textarea required name="prd_details" class="form-control" rows="3"></textarea>
+									<textarea required name="prd_details" class="form-control" rows="3" >"<%=prdFound.prd_details%>"</textarea>
 								</div>
 							<button name="sbm" type="submit" class="btn btn-success">Thêm mới</button>
 							<button type="reset" class="btn btn-default">Làm mới</button>
