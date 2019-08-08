@@ -103,10 +103,14 @@ router.get('/product/del/:prdId', (req, res) =>{
 router.get('/order', (req, res) =>{
     orderController.findAllOrder()
     .then((data) => {
-        console.log(data)
+    
         res.render('user/order', {data})
     })
     .catch(err => console.log(err))
 })
 
+router.get('/order/del/:orderId', (req, res) =>{
+    orderController.deleteOrder(req.params.orderId)
+    res.redirect('/user/order')
+})
 module.exports = router

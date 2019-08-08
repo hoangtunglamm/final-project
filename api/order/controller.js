@@ -1,17 +1,30 @@
 const orderModel = require('./model')
 
-let createOrder = ({name, phone, address, mail}) =>{
-    return new Promise( (resolve, reject) =>{
-        orderModel.create({name, phone, address, mail})
-        .then(orderCreated => resolve(orderCreated))
-        .catch(err => reject(err))
-    })
-}
+
 let findAllOrder = () =>{
     return new Promise( (resolve, reject) =>{
-        orderModel.find()
+        orderModel.find({active:true})
         .then(orderFound => resolve(orderFound))
         .catch(err => reject(err))
     })
 }
-module.exports = {createOrder, findAllOrder}
+
+let createOrderTest = ({name, phone, address, mail}, prd_name) =>{
+    return new Promise( (resolve, reject) =>{
+        const order = new orderModel({
+            name, phone, address, mail, prd_name
+        })
+        order.save()
+        .then(orderCreated => resolve(orderCreated))
+        .catch(err => console.log(err))
+    })
+}
+
+const deleteOrder = (orderId) =>{
+    return new Promise( (resolve, reject) =>{
+     orderModel.findByIdAndUpdate(orderId, {active: false})
+      .then(orderDelete => resolve(orderDelete._id))
+      .catch(err => reject(err))
+    })
+  }
+module.exports = { findAllOrder, createOrderTest, deleteOrder}

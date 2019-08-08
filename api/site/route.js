@@ -5,7 +5,6 @@ const categoryController = require('../category/controller')
 const sendMailController = require('./send_mail')
 const nodemailer = require('nodemailer')
 router.get('/', (req, res) =>{
-  console.log(req.session)
     productController.getProductFeatured()
     .then((prdFeatured) =>{
         productController.getProductLastest()
@@ -44,7 +43,7 @@ router.get('/cart/:prdId', (req, res) =>{
 })
 
 router.get('/cart',  async(req, res) =>{
-  console.log(req.session)
+
   let prdCart = req.session.cart
   let data = await Promise.all(prdCart.map(prdId => productController.findOneProduct(prdId)))
   let price =  0;

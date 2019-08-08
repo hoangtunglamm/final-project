@@ -28,27 +28,27 @@
 
 						<thead>
 						<tr>
-							<th data-field="id" data-sortable="true">ID</th>
+			
 							<th data-field="name"  data-sortable="true">Tên sản phẩm</th>
-							<th data-field="price" data-sortable="true">Giá</th>
-							<th>Ảnh sản phẩm</th>
-							<th>Trạng thái</th>
-							<th>Danh mục</th>
+							<th data-field="price" data-sortable="true">Tên khách hàng</th>
+							<th>SĐT</th>
+							<th>Địa chỉ</th>
+							<th>Email</th>
 							<th>Hành động</th>
 						</tr>
 						</thead>
 						<tbody>
-							<%for(key in data.products){%>
+							<%for(key in data){%>
 							<tr>
-								<td >dsd</td>
-								<td >dsdsd</td>
-								<td >vnd</td>
-								<td style="text-align: center">sdsd</td>
-								<td><span class="label">sas</span></td>
-								<td>assas</td>
+							
+								<td ><%=data[key].prd_name%></td>
+								<td ><%=data[key].name%></td>
+								<td style="text-align: center"><%=data[key].phone%></td>
+								<td><%=data[key].address%></td>
+								<td><%=data[key].mail%></td>
 								<td class="form-group">
-									<a href="#" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i></a>
-									<a href="#" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
+							
+									<a href="/user/order/del/<%=data[key]._id%>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
 								</td>
 							</tr>
 							<%}%>

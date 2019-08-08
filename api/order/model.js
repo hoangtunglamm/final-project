@@ -6,7 +6,8 @@ const orderModel = new Schema({
    phone: {type: Number},
    address: {type: String},
    mail: {type: String},
-   active: {type: Boolean, default:true}
+   active: {type: Boolean, default:true},
+   prd_name: {type: String}
 })
 
 module.exports = mongoose.model('order', orderModel)

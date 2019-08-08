@@ -49,7 +49,7 @@ app.use('/', categoryMiddleware.categories, cartMiddleware.cartMW ,siteRouter)
 app.use('/category', categoryRouter)
 app.use('/product', productRouter)
 app.use('/auth', authRouter)
-app.use('/user', authMiddleware.authorize, userRouter)
+app.use('/user', userRouter)
 app.use('/order', orderRouter)
 
 
