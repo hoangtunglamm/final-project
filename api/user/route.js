@@ -5,6 +5,8 @@ const categoryController = require('../category/controller')
 const productController = require('../product/controller')
 const productModel = require('../product/model')
 const multer = require('multer');
+const orderController = require('../order/controller')
+
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb){
@@ -96,6 +98,15 @@ router.post('/product/edit/:prdId', upload.single('prd_image'), (req, res) =>{
 router.get('/product/del/:prdId', (req, res) =>{
     productController.deleteProduct(req.params.prdId)
     res.redirect('/user/product')
+})
+
+router.get('/order', (req, res) =>{
+    orderController.findAllOrder()
+    .then((data) => {
+        console.log(data)
+        res.render('user/order', {data})
+    })
+    .catch(err => console.log(err))
 })
 
 module.exports = router

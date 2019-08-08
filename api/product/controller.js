@@ -76,8 +76,25 @@ const getProductLastest = () =>{
   })
 }
 
+// const getProductByCategory = () =>{
+//   return new Promise( (resolve, reject) =>{
+//     productModel.find()
+//     .populate( 'name')
+//     .exec()
+//     .then(data => resolve(data))
+//     .catch(err => reject(err))
+//   })
+// }
 
-
+const getProductByCategory = () =>{
+  return new Promise( (resolve, reject) =>{
+    productModel.find()
+    .populate( 'category', 'name')
+    .exec()
+    .then(data => resolve(data))
+    .catch(err => reject(err))
+  })
+}
 
 
 const updateProduct = (prdId, { prd_name,
@@ -113,12 +130,13 @@ const deleteProduct = (prdId) =>{
 //     })
 // }
 
-module.exports ={ createProduct,
+module.exports ={ createProduct, 
                   getAllProduct, 
                   updateProduct,
                   deleteProduct, 
                   getProductByPage, 
                   findOneProduct, 
                   getProductFeatured,
-                  getProductLastest}
+                  getProductLastest, 
+                  getProductByCategory}
                 

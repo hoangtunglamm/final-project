@@ -1,18 +1,26 @@
-const UserModel = require('./model');
+const categoryModel = require('./model');
 
-const createCategory = (name, test) =>{
+const createCategory = (name) =>{
     return new Promise( (resolve, reject) =>{
-        UserModel.create(name, test)
+        categoryModel.create(name)
         .then(data => resolve(data))
         .catch(err => reject(err))
     })
 }
-const findAllCategory = (name) =>{
+const findAllCategory = () =>{
     return new Promise( (resolve, reject) =>{
-        UserModel.find(name)
+        categoryModel.find()
+        .then(catFound => resolve(catFound))
+        .catch(err => reject(err))
+    })
+}
+
+const findCategory = (someshit) =>{
+    return new Promise( (resolve, reject) =>{
+        categoryModel.find({name : someshit})  
         .then(data => resolve(data))
         .catch(err => reject(err))
     })
 }
 
-module.exports ={createCategory, findAllCategory}
+module.exports ={createCategory, findAllCategory, findCategory}
