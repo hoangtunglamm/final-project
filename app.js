@@ -40,7 +40,12 @@ app.use(bodyParser.json({ extended: false }));
 mongoose.set('useNewUrlParser', true);
 mongoose.set('useFindAndModify', false);
 mongoose.set('useCreateIndex', true);
-mongoose.connect('mongodb://localhost:27017/final-project', {useNewUrlParser: true}, err => {
+// mongoose.connect('mongodb://localhost:27017/final-project', {useNewUrlParser: true}, err => {
+//     if (err) console.error(err);
+//     else console.log("Database connect successful");
+//   });
+
+mongoose.connect("mongodb://lam:123qwerty@ds211368.mlab.com:11368/final-project", {useNewUrlParser: true}, err => {
     if (err) console.error(err);
     else console.log("Database connect successful");
   });
@@ -49,7 +54,7 @@ app.use('/', categoryMiddleware.categories, cartMiddleware.cartMW ,siteRouter)
 app.use('/category', categoryRouter)
 app.use('/product', productRouter)
 app.use('/auth', authRouter)
-app.use('/user', userRouter)
+app.use('/user',authMiddleware.authorize, userRouter)
 app.use('/order', orderRouter)
 
 

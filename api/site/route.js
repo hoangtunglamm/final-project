@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const productController = require('../product/controller')
-const categoryController = require('../category/controller')
-const sendMailController = require('./send_mail')
-const nodemailer = require('nodemailer')
+
 router.get('/', (req, res) =>{
     productController.getProductFeatured()
     .then((prdFeatured) =>{
@@ -70,41 +68,8 @@ router.get('/product/:prdId', (req, res) =>{
   .catch(err => console.log(err))
 })  
 
-router.get('/send_mail/cart', async(req, res) =>{
-  console.log(req.session.cart)
-  let prdCart = req.session.cart
-  let data = await Promise.all(prdCart.map(prdId => productController.findOneProduct(prdId)))
-  console.log(data)
-  const transporter = nodemailer.createTransport({
-		service: 'gmail',
-		auth: {
-		  user: 'lamptit96@gmail.com',
-		  pass: 'meyuptrmbhplvsnn'
-		}
-	  });
-      let mail = [req.body.mail]
-      let name = req.body.name
-      let add = req.body.add
-      let phone = req.body.phone
-
-    
-	  const mailOptions = {
-		from: 'lam hoang',
-		to: mail,
-		subject: 'HTLam-project',
-    text: `cam on ${name} dia chi ${add} sdt ${phone}`
-    
-	  };
-	  
-	  transporter.sendMail(mailOptions, function(error, info){
-		if (error) {
-		  console.log(error);
-		} else {
-		  console.log('Email sent: ' + info.response);
-		  res.json(req.body)
-		}
-	  });
-  res.send('ok')
+router.get('/search', (req, res) =>{
+  res.render('site/search')
 })
 
 module.exports = router

@@ -12,7 +12,7 @@ const sendMailOder = (mail ) =>{
 		from: 'lam hoang',
 		to: email,
 		subject: 'HTLam-project',
-        text: 'ok ez'
+        text: 'cảm ơn anh đã đọc đến tận chỗ này :3'
     
 	  };
 	  

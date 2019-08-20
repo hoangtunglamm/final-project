@@ -6,7 +6,7 @@ const productController = require('../product/controller')
 const productModel = require('../product/model')
 const multer = require('multer');
 const orderController = require('../order/controller')
-
+const siteSendMail = require('../site/send_mail')
 
 const storage = multer.diskStorage({
   destination: function(req, file, cb){
@@ -76,7 +76,6 @@ router.post('/product/add', upload.single('prd_image'), (req, res) =>{
 router.get('/product/edit/:prdId', (req, res) =>{
     productController.findOneProduct(req.params.prdId)
     .then(prdFound =>{
-        console.log(prdFound)
         categoryController.findAllCategory()
         .then((categories) =>{
             res.render('user/edit_product', {categories, prdFound})
@@ -103,7 +102,7 @@ router.get('/product/del/:prdId', (req, res) =>{
 router.get('/order', (req, res) =>{
     orderController.findAllOrder()
     .then((data) => {
-    
+        console.log(data)
         res.render('user/order', {data})
     })
     .catch(err => console.log(err))
@@ -112,5 +111,11 @@ router.get('/order', (req, res) =>{
 router.get('/order/del/:orderId', (req, res) =>{
     orderController.deleteOrder(req.params.orderId)
     res.redirect('/user/order')
+})
+
+router.get('/order/send_mail/:mail', (req, res) =>{
+
+    siteSendMail.sendMailOder(req.params.mail)
+    res.send('mail send')
 })
 module.exports = router
