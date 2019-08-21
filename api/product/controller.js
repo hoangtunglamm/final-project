@@ -119,6 +119,13 @@ const deleteProduct = (prdId) =>{
   })
 }
 
+const getProductByQuery = () =>{
+  return new Promise( (resolve, reject) =>{
+    productModel.find({prd_name: "Vivo-Y53C-Gold"})
+    .then(productFound => resolve(productFound._id))
+    .catch(err => reject(err))
+  })
+}
 
 // const test = (imgId) =>{
 //     return new Promise( (resolve, reject) =>{
@@ -138,5 +145,6 @@ module.exports ={ createProduct,
                   findOneProduct, 
                   getProductFeatured,
                   getProductLastest, 
-                  getProductByCategory}
+                  getProductByCategory, 
+                  getProductByQuery}
                 

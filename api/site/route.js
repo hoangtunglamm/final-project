@@ -68,8 +68,21 @@ router.get('/product/:prdId', (req, res) =>{
   .catch(err => console.log(err))
 })  
 
-router.get('/search', (req, res) =>{
-  res.render('site/search')
+// router.get('/search', (req, res) =>{
+//    productController.getAllProduct() 
+//    .then(results =>{
+//     console.log(req.query.q)
+//     let data = results.filter(item => item.prd_name.toLowerCase().includes(req.query.q))   
+//     res.render('site/search', {data, start:1})
+//    })
+//    .catch(err => console.log(err))
+// })
+router.get('/search', async(req, res) =>{
+   let searchResults = await productController.getAllProduct()  
+   let data = searchResults.filter(item => item.prd_name.toLowerCase().includes(req.query.q)) 
+        
+   res.render('site/search', {data, start:1} )
 })
+
 
 module.exports = router
