@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 const bcrypt = require('bcryptjs')
-const userModel = new Schema({
-    username: String,
+const adminModel = new Schema({
+    adminname: String,
     password: String
 })
-userModel.pre("save", function(next) {
+adminModel.pre("save", function(next) {
   const saltRounds = 10;
   const plainPassword = this.password;
   bcrypt.genSalt(saltRounds)
@@ -17,4 +17,4 @@ userModel.pre("save", function(next) {
     })
     .catch(err => next(err))
   });
-module.exports = mongoose.model('user', userModel)
+module.exports = mongoose.model('admin', adminModel)

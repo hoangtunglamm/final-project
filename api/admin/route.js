@@ -1,6 +1,6 @@
 const express = require('express');
 router = express.Router();
-const userController = require('./controller');
+const adminController = require('./controller');
 const categoryController = require('../category/controller')
 const productController = require('../product/controller')
 const productModel = require('../product/model')
@@ -20,13 +20,13 @@ const upload = multer({storage:storage})
 
 
 router.post('/', (req, res) =>{
-    userController.createUser(req.body)
+    adminController.createAdmin(req.body)
     .then(data => res.send(data))
     .catch(err => console.log(err))
 });
 
 router.get('/dashboard', (req, res) =>{
-    res.render('user/dashboard')
+    res.render('admin/dashboard')
 })
 
 
@@ -48,7 +48,7 @@ router.get('/product', (req, res)=>{
 		}
         productController.getProductByPage(page, perPage)
         .then( (data) =>{
-            res.render('user/product', {data, number_page, page_next, page_prev})                        
+            res.render('admin/product', {data, number_page, page_next, page_prev})                        
         })
         .catch(err => console.log(err))
     })
@@ -57,7 +57,7 @@ router.get('/product', (req, res)=>{
 router.get('/product/add', (req, res) =>{      
     categoryController.findAllCategory()
     .then((categories) =>{
-        res.render('user/add_product', {categories})
+        res.render('admin/add_product', {categories})
     })
     .catch(err => console.log(err))
 })
@@ -70,7 +70,7 @@ router.post('/product/add', upload.single('prd_image'), (req, res) =>{
     
     productController.createProduct( req.body, img_name)
 
-    res.redirect('/user/product')
+    res.redirect('/admin/product')
 });
 
 router.get('/product/edit/:prdId', (req, res) =>{
@@ -78,7 +78,7 @@ router.get('/product/edit/:prdId', (req, res) =>{
     .then(prdFound =>{
         categoryController.findAllCategory()
         .then((categories) =>{
-            res.render('user/edit_product', {categories, prdFound})
+            res.render('admin/edit_product', {categories, prdFound})
         })
     })
    
@@ -91,26 +91,26 @@ router.post('/product/edit/:prdId', upload.single('prd_image'), (req, res) =>{
     img_array.splice(0, 1)
     img_name =  img_array.join('/')
     productController.updateProduct(req.params.prdId, req.body, img_name)
-    res.redirect('/user/product')
+    res.redirect('/admin/product')
 })
 
 router.get('/product/del/:prdId', (req, res) =>{
     productController.deleteProduct(req.params.prdId)
-    res.redirect('/user/product')
+    res.redirect('/admin/product')
 })
 
 router.get('/order', (req, res) =>{
     orderController.findAllOrder()
     .then((data) => {
         console.log(data)
-        res.render('user/order', {data})
+        res.render('admin/order', {data})
     })
     .catch(err => console.log(err))
 })
 
 router.get('/order/del/:orderId', (req, res) =>{
     orderController.deleteOrder(req.params.orderId)
-    res.redirect('/user/order')
+    res.redirect('/admin/order')
 })
 
 router.get('/order/send_mail/:mail', (req, res) =>{

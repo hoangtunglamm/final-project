@@ -28,35 +28,48 @@
 
 						<thead>
 						<tr>
-			
+							<th data-field="id" data-sortable="true">ID</th>
 							<th data-field="name"  data-sortable="true">Tên sản phẩm</th>
-							<th data-field="price" data-sortable="true">Tên khách hàng</th>
-							<th>SĐT</th>
-							<th>Địa chỉ</th>
-							<th>Email</th>
+							<th data-field="price" data-sortable="true">Giá</th>
+							<th>Ảnh sản phẩm</th>
+							<th>Trạng thái</th>
+							<th>Danh mục</th>
 							<th>Hành động</th>
 						</tr>
 						</thead>
 						<tbody>
 							<%for(key in data){%>
 							<tr>
-							
+								<td ><%=data[key].prd_id%></td>
 								<td ><%=data[key].prd_name%></td>
-								<td ><%=data[key].name%></td>
-								<td style="text-align: center"><%=data[key].phone%></td>
-								<td><%=data[key].address%></td>
-								<td><%=data[key].mail%></td>
+								<td ><%=data[key].prd_price%> vnd</td>
+								<td style="text-align: center"><img width="130" height="180" src="/static/<%=data[key].prd_image%>" /></td>
+								<td><span class="label label-<%if(data[key].prd_status==1){%>success<%}else{%>danger<%}%>"><%if(data[key].prd_status==1){%>Còn hàng<%}else{%>Hết hàng<%}%></span></td>
+								
+								<td><%=data[key].category.name%></td>
 								<td class="form-group">
-							
-									<a href="/user/order/del/<%=data[key]._id%>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
-									<a href="/user/order/send_mail/<%=data[key].mail%>" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i></a>
+									<a href="/admin/product/edit/<%=data[key]._id%>" class="btn btn-primary"><i class="glyphicon glyphicon-pencil"></i></a>
+									<a href="/admin/product/del/<%=data[key]._id%>" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i></a>
 								</td>
 							</tr>
 							<%}%>
 						</tbody>
 					</table>
 				</div>
-				
+				<div class="panel-footer">
+					<nav aria-label="Page navigation example">
+						<ul class="pagination">
+							<li class="page-item"><a class="page-link" href="/admin/product/?page=<%=page_prev%>">&laquo;</a></li>
+							<%for(i=1; i<=number_page; i++){%>
+							<li class="page-item"><a class="page-link" href="/admin/product?page=<%=i%>"><%=i%></a></li>
+							<%}%>
+							<li class="page-item"><a class="page-link" href="/admin/product?page=<%=page_next%>">&raquo;</a></li>
+						</ul>
+					</nav>
+				</div>
+			</div>
+		
+    </div>
 			</div>
 		</div>
 	</div><!--/.row-->	

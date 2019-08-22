@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const categoryRouter = require('./api/category/route')
 const productRouter = require('./api/product/route')
 const authRouter = require('./api/auth/router')
-const userRouter = require('./api/user/route')
+const adminRouter = require('./api/admin/route')
 const siteRouter = require('./api/site/route')
 const orderRouter = require('./api/order/route')
 const authMiddleware = require('./api/middlewares/auth')
@@ -54,7 +54,7 @@ app.use('/', categoryMiddleware.categories, cartMiddleware.cartMW ,siteRouter)
 app.use('/category', categoryRouter)
 app.use('/product', productRouter)
 app.use('/auth', authRouter)
-app.use('/user',authMiddleware.authorize, userRouter)
+app.use('/admin',authMiddleware.authorize, adminRouter)
 app.use('/order', orderRouter)
 
 

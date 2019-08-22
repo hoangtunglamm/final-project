@@ -1,12 +1,12 @@
-const userModel = require('../user/model')
+const adminModel = require('../admin/model')
 const bcypt = require('bcryptjs');
 const session = require('express-session')
-const login = ({username, password}) =>{
+const login = ({adminname, password}) =>{
     return new Promise( (resolve, reject) =>{
-        userModel.findOne({username})
-        .then(userFound =>{
+        adminModel.findOne({adminname})
+        .then(adminFound =>{
            
-            if(!userFound || !userFound.password){
+            if(!adminFound || !adminFound.password){
                 reject({
                     statusCode: 400, 
                     err: "Wrong name!"
@@ -14,10 +14,10 @@ const login = ({username, password}) =>{
             }
            
                 else{
-                    bcypt.compare(password, userFound.password)
+                    bcypt.compare(password, adminFound.password)
                     .then(compareResult =>{
                         if(compareResult){
-                            resolve({username: userFound.username, userId: userFound._id})
+                            resolve({adminname: adminFound.adminname, adminId: adminFound._id})
                         }
                         else{
                             reject({
